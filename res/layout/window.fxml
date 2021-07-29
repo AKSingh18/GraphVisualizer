@@ -34,7 +34,6 @@
 
    </AnchorPane>
 
-   <!-- fx:id:workspace is needed to set the workspace controller -->
-   <fx:include fx:id="workspace" source="workspace.fxml" styleClass="workspace" stylesheets="@../style/window.css" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0" />
+   <AnchorPane fx:id="workspace" onMouseClicked="#updateWorkspace" styleClass="workspace" stylesheets="@../style/window.css" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0"> </AnchorPane>
 
 </AnchorPane>

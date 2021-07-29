@@ -156,11 +156,6 @@ public class Edge extends Group
         return arrowHead;
     }
 
-    public void setDirected(boolean isDirected)
-    {
-        if ()
-    }
-
     // STATIC METHOD
 
     public static Edge getEdge(Vertex startVertex, Vertex endVertex, double vertexRadius, boolean isDirected)
