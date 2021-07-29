@@ -1,0 +1,1 @@
+1 - vertex can be deleted in a square region around the circle

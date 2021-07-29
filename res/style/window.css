@@ -1,0 +1,29 @@
+.root {
+    -fx-background-color: #B0B0B0;
+    -fx-pref-width: 1240;
+    -fx-pref-height: 760;
+}
+
+.tool-bar {
+    -fx-background-color: #F5F5F5;
+}
+
+.workspace {
+    -fx-background-color: white;
+}
+
+.toggle-button {
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-font-family: "JetBrains Mono";
+    -fx-text-alignment: center;
+    -fx-pref-height: 40px;
+}
+
+.label {
+    -fx-font-family: "Open Sans";
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}

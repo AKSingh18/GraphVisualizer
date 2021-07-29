@@ -1,0 +1,19 @@
+.circle {
+    -fx-stroke-width: 2px;
+    -fx-stroke: black;
+    -fx-fill: white;
+}
+
+.number {
+    -fx-font-family: "Roboto Thin";
+    -fx-font-size: 20px;
+    -fx-font-weight: lighter;
+}
+
+.line {
+    -fx-stroke-width: 2px;
+}
+
+.arrow-head {
+    -fx-fill: black;
+}
