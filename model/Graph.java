@@ -71,6 +71,34 @@ public abstract class Graph
         return null;
     }
 
+    private void deleteVertex(int vertex)
+    {
+        // remove all the edges starting from that vertex
+        adjacencyList.remove(vertex);
+
+        /* remove all the edges ending at that vertex AND decrement the vertex number of all the vertices having vertex
+           number than that of the vertex to be deleted
+        */
+        for (ArrayList<Integer> neighbours : adjacencyList)
+        {
+            int index = 0;
+
+            while (index < neighbours.size())
+            {
+                int neighbour = neighbours.get(index);
+
+                if (neighbour == vertex)
+                {
+                    neighbours.remove(index);
+                    continue;
+                }
+
+                if (neighbours.get(index) > vertex) neighbours.set(index, neighbour-1);
+                index++;
+            }
+        }
+    }
+
     /* method to be used by controller class to delete a vertex. it returns a List of nodes to be deleted by the
        controller class. deletion of vertex will also lead to the deletion of any edge connected to the vertex.
        hence, a list of Node is returned.
@@ -102,13 +130,18 @@ public abstract class Graph
             // decrement the vertex number of all the vertices ahead of found vertex
             for (int i = vertexIndex+1;i < vertices.size();i++) vertices.get(i).decrementVertexNumber();
 
+            deleteVertex(foundVertex.getVertexNumber());
+
             // delete the found vertex and update the vertexCount
             nodesToDelete.add(foundVertex);
             vertices.remove(vertexIndex);
+            vertexCount--;
         }
 
         return nodesToDelete;
     }
+
+    abstract void deleteEdge(int source, int destination);
 
     // method to be used by controller class to delete an edge
     public Edge deleteEdge(double[] coordinates)
@@ -125,7 +158,11 @@ public abstract class Graph
             edgeIndex--;
         }
 
-        if (edgeIndex != -1) edges.remove(edge);
+        if (edgeIndex != -1)
+        {
+            deleteEdge(edge.getStartVertex().getVertexNumber(), edge.getEndVertex().getVertexNumber());
+            edges.remove(edge);
+        }
 
         return edge;
     }

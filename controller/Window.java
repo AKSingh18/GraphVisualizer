@@ -6,8 +6,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import model.DirectedGraph;
 import model.Graph;
+import model.UndirectedGraph;
 
 import java.util.ArrayList;
 
@@ -24,12 +24,14 @@ public class Window
     @FXML private ToggleButton deleteEdge;
     @FXML private AnchorPane workspace;
 
-    Graph graph = new DirectedGraph();
+    // By default, the graph is undirected
+    Graph graph;
     private double previousClickX, previousClickY;
 
     // CONSTRUCTOR
     public Window()
     {
+        graph = new UndirectedGraph();
         previousClickX = previousClickY = -1;
     }
 
@@ -110,7 +112,7 @@ public class Window
 
     private void addEdge(double x, double y)
     {
-        Node nodeToAdd = graph.addEdge(new double[]{previousClickX, previousClickY}, new double[]{x, y}, true);
+        Node nodeToAdd = graph.addEdge(new double[]{previousClickX, previousClickY}, new double[]{x, y}, false);
 
         if (nodeToAdd != null)
         {
