@@ -1,4 +1,4 @@
-package src;
+package model;
 
 import javafx.scene.Group;
 import javafx.scene.shape.Line;

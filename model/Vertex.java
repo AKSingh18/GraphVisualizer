@@ -1,4 +1,4 @@
-package src;
+package model;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
@@ -35,6 +35,9 @@ public class Vertex extends StackPane
 
         // Configure the vertex
         this.getChildren().addAll(circle, this.vertexNumberText);
+
+        this.setLayoutX(centreX-radius);
+        this.setLayoutY(centreY-radius);
     }
 
     // METHODS

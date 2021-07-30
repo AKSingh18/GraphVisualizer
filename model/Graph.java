@@ -1,22 +1,195 @@
 package model;
 
+import javafx.scene.Node;
+
 import java.util.ArrayList;
 
 public abstract class Graph
 {
-    final ArrayList<ArrayList<Integer>> adjacencyList;
-    int vertices;
+    final ArrayList<Vertex> vertices;
+    final ArrayList<Edge> edges;
+    final double vertexRadius;
+    int vertexCount;
+
+    ArrayList<ArrayList<Integer>> adjacencyList;
+
+    // CONSTRUCTOR
 
     public Graph()
     {
+        vertexRadius = 24;
+        vertexCount = 0;
+
         adjacencyList = new ArrayList<>();
-        vertices = 0;
+        vertices = new ArrayList<>();
+        edges = new ArrayList<>();
     }
 
-    public void addVertex()
+    // GETTER
+
+    public double getVertexRadius() { return vertexRadius; }
+
+    // METHODS
+
+    void addVertex()
     {
         adjacencyList.add(new ArrayList<>());
     }
 
+    // method to be used by controller class to create a vertex
+    public Node addVertex(double[] centre)
+    {
+        // add the to the adjacency list
+        addVertex();
+
+        Vertex vertex = new Vertex(vertexRadius, vertexCount++, centre[0], centre[1]);
+        vertices.add(vertex);
+        return vertex;
+    }
+
     abstract public void addEdge(int source, int destination);
+
+    // method to be used by controller class to create an edge
+    public Node addEdge(double[] previousClick, double[] currentClick, boolean isDirected)
+    {
+        int startVertexIndex = findVertexIndex(previousClick[0], previousClick[1]);
+        int endVertexIndex = findVertexIndex(currentClick[0], currentClick[1]);
+
+        if (startVertexIndex != -1 && endVertexIndex != -1 && startVertexIndex != endVertexIndex)
+        {
+            Vertex startVertex = vertices.get(startVertexIndex);
+            Vertex endVertex = vertices.get(endVertexIndex);
+
+            // add the to the adjacency list
+            addEdge(startVertex.getVertexNumber(), endVertex.getVertexNumber());
+
+            Edge edge = Edge.getEdge(startVertex, endVertex, vertexRadius, isDirected);
+            edges.add(edge);
+            return edge;
+        }
+
+        return null;
+    }
+
+    /* method to be used by controller class to delete a vertex. it returns a List of nodes to be deleted by the
+       controller class. deletion of vertex will also lead to the deletion of any edge connected to the vertex.
+       hence, a list of Node is returned.
+    */
+    public ArrayList<Node> deleteVertex(double[] coordinates)
+    {
+        ArrayList<Node> nodesToDelete = new ArrayList<>();
+        int vertexIndex = findVertexIndex(coordinates[0], coordinates[1]);
+
+        // if index >= 0 then the point of click is inside a vertex
+        if (vertexIndex >= 0)
+        {
+            Vertex foundVertex = vertices.get(vertexIndex);
+
+            // delete any edge which has this vertex has its starting or ending point
+            int edgeIndex = 0;
+            while (edgeIndex < edges.size())
+            {
+                Edge edge = edges.get(edgeIndex);
+
+                if (edge.getStartVertex() == foundVertex || edge.getEndVertex() == foundVertex)
+                {
+                    edges.remove(edge);
+                    nodesToDelete.add(edge);
+                }
+                else edgeIndex++;
+            }
+
+            // decrement the vertex number of all the vertices ahead of found vertex
+            for (int i = vertexIndex+1;i < vertices.size();i++) vertices.get(i).decrementVertexNumber();
+
+            // delete the found vertex and update the vertexCount
+            nodesToDelete.add(foundVertex);
+            vertices.remove(vertexIndex);
+        }
+
+        return nodesToDelete;
+    }
+
+    // method to be used by controller class to delete an edge
+    public Edge deleteEdge(double[] coordinates)
+    {
+        int edgeIndex = edges.size() - 1;
+        Edge edge = null;
+
+        while (edgeIndex >= 0)
+        {
+            edge = edges.get(edgeIndex);
+
+            if (pointLiesInsideRectangle(edge.getEdgeRectangleCorners(), coordinates)) break;
+
+            edgeIndex--;
+        }
+
+        if (edgeIndex != -1) edges.remove(edge);
+
+        return edge;
+    }
+
+    // method to be used by controller class to reset the graph
+    public void reset()
+    {
+        vertexCount = 0;
+
+        vertices.clear();
+        edges.clear();
+
+        adjacencyList = new ArrayList<>();
+    }
+
+    /* the method checks if the user clicked point lies inside the rectangle or not. help has been taken from stackoverflow.
+       LINK: https://stackoverflow.com/questions/2752725/finding-whether-a-point-lies-inside-a-rectangle-or-not
+    */
+
+    private boolean pointLiesInsideRectangle(double[][] corners, double[] point)
+    {
+        double[] A = corners[0];
+        double[] B = corners[1];
+        double[] C = corners[2];
+        double[] D = corners[3];
+
+        return (isClockwise(A, B, point) && isClockwise(B, C, point) && isClockwise(C, D, point) && isClockwise(D, A, point)) ||
+                (!isClockwise(A, B, point) && !isClockwise(B, C, point) && !isClockwise(C, D, point) && !isClockwise(D, A, point));
+    }
+
+    /* the method determines whether a directed segment p1-p2 is closer to a directed segment p1-p0
+       in a clockwise direction or in a counterclockwise direction with respect to their common endpoint p1
+    */
+
+    private boolean isClockwise(double[] p2, double[] p1, double[] p0)
+    {
+        return ((p0[0]-p1[0])*(p2[1]-p1[1]) - (p0[1]-p1[1])*(p2[0]-p1[0])) > 0;
+    }
+
+    /* This method locates the vertex located closet to (x, y) coordinates of the workspace.
+       WARNING: Current implementation of vertex uses StackPane to hold the vertex.
+       getLayoutX() and getLayoutY() return the top-left most point of the StackPane. They DO NOT return the centre of the vertex.
+
+       The vertex can be considered as enclosed inside a square of side equal to the vertex diameter. Any click event
+       inside that square will lead to the deletion of that vertex or addition of any edge.
+    */
+    private int findVertexIndex(double x, double y)
+    {
+        int index = vertices.size()-1;
+        Vertex vertex;
+        double vertexX, vertexY;
+
+        while (index >= 0)
+        {
+            vertex = vertices.get(index);
+            vertexX = vertex.getLayoutX();
+            vertexY = vertex.getLayoutY();
+
+            // check if the point of click is inside the vertex
+            if ((x-vertexX >= 0 && x-vertexX <= 2*vertexRadius) && (y-vertexY >= 0 && y-vertexY <= 2*vertexRadius)) break;
+
+            index--;
+        }
+
+        return index;
+    }
 }
