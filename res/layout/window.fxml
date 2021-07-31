@@ -31,6 +31,18 @@
       <Separator layoutX="417.0" layoutY="21.0" orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="414.0" AnchorPane.topAnchor="-5.0" />
       <Button layoutX="426.0" layoutY="10.0" minWidth="70.0" mnemonicParsing="false" onAction="#onReset" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefWidth="70.0" styleClass="toggle-button" stylesheets="@../style/window.css" text="Reset" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="415.4" AnchorPane.topAnchor="-5.0" />
       <Separator layoutX="488.0" layoutY="21.0" orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="484.4" AnchorPane.topAnchor="-5.0" />
+      <ToggleButton fx:id="undirected" contentDisplay="CENTER" layoutX="80.0" layoutY="10.0" minWidth="90.0" mnemonicParsing="false" onAction="#onGraphSelect" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefWidth="70.0" styleClass="toggle-button" stylesheets="@../style/window.css" text="Directed" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="-5.0">
+         <toggleGroup>
+            <ToggleGroup fx:id="graphType" />
+         </toggleGroup>
+      </ToggleButton>
+      <Separator layoutX="430.0" layoutY="10.0" orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="-5.0" />
+      <ToggleButton fx:id="directed" contentDisplay="CENTER" layoutX="1160.0" layoutY="10.0" minWidth="90.0" mnemonicParsing="false" onAction="#onGraphSelect" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefWidth="70.0" styleClass="toggle-button" stylesheets="@../style/window.css" text="Undirected" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="-5.0">
+         <toggleGroup> <fx:reference source="graphType"/> </toggleGroup>
+      </ToggleButton>
+      <Separator layoutX="1158.0" layoutY="10.0" orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="-5.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="221.0" layoutY="10.0" minWidth="70.0" prefWidth="70.0" text="Graph" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="-5.0" />
+      <Separator layoutX="1068.0" layoutY="10.0" orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="-5.0" />
 
    </AnchorPane>
 

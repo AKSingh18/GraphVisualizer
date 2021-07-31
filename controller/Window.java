@@ -15,13 +15,18 @@ public class Window
 {
     // VARIABLES
 
-    // tools consists of addVertex, addEdge, deleteVertex and deleteEdge
+    // tools consists of addVertex, addEdge, deleteVertex and deleteEdge ToggleButton
     @FXML private ToggleGroup tools;
+    // graph type consists of directed and undirected ToggleButton
+    @FXML private ToggleGroup graphType;
 
     @FXML private ToggleButton addVertex;
     @FXML private ToggleButton addEdge;
     @FXML private ToggleButton deleteVertex;
     @FXML private ToggleButton deleteEdge;
+    @FXML private ToggleButton undirected;
+    @FXML private ToggleButton directed;
+
     @FXML private AnchorPane workspace;
 
     // By default, the graph is undirected
@@ -52,7 +57,10 @@ public class Window
     private void onMouseEntered(MouseEvent mouseEvent)
     {
         Node source = (Node)mouseEvent.getSource();
-        if (!source.equals(tools.getSelectedToggle())) source.setStyle("-fx-background-color: #DCDCDC");
+
+        // if source is not any of the selected toggle button from tools or graph type toggle groups then change color
+        if (!source.equals(tools.getSelectedToggle()) && !source.equals(graphType.getSelectedToggle()))
+            source.setStyle("-fx-background-color: #DCDCDC");
     }
 
     // To remove the hover effect onMouseExited()
@@ -60,7 +68,10 @@ public class Window
     private void onMouseExited(MouseEvent mouseEvent)
     {
         Node source = (Node)mouseEvent.getSource();
-        if (!source.equals(tools.getSelectedToggle())) source.setStyle("-fx-background-color: transparent");
+
+        // if source is not any of the selected toggle button from tools or graph type toggle groups then change color
+        if (!source.equals(tools.getSelectedToggle()) && !source.equals(graphType.getSelectedToggle()))
+            source.setStyle("-fx-background-color: transparent");
     }
 
     // following event takes place onMouseClicked(MouseEvent mouseEvent)
@@ -86,9 +97,8 @@ public class Window
         graph.reset();
     }
 
-    // METHODS
-
-    // To add gradient on the selected ToggleButton and remove gradient from any other ToggleButton
+    // To add gradient on the selected ToggleButton from tools toggle group and remove gradient from any other
+    // ToggleButton
     @FXML
     private void onToolsSelect()
     {
@@ -100,6 +110,20 @@ public class Window
         ToggleButton selectedToggleButton = (ToggleButton) tools.getSelectedToggle();
         if (selectedToggleButton != null) selectedToggleButton.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(183, 222, 235, 0.50) 0%, rgba(147, 112, 219, 0.40) 100%)");
     }
+
+    // To add gradient on the selected ToggleButton from graphType toggle group and remove gradient from any other
+    // ToggleButton
+    @FXML
+    private void onGraphSelect()
+    {
+        undirected.setStyle("-fx-background-color: transparent");
+        directed.setStyle("-fx-background-color: transparent");
+
+        ToggleButton selectedToggleButton = (ToggleButton) graphType.getSelectedToggle();
+        if (selectedToggleButton != null) selectedToggleButton.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(255, 165, 0, 0.40) 0%, rgba(0, 255, 127, .20) 100%)");
+    }
+
+    // METHODS
 
     private void addVertex(double x, double y)
     {
@@ -141,4 +165,6 @@ public class Window
 
         workspace.getChildren().remove(nodeToDelete);
     }
+
+
 }
