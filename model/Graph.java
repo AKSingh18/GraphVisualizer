@@ -31,6 +31,7 @@ public abstract class Graph
 
     // METHODS
 
+    // method to add vertex from the adjacency list
     void addVertex()
     {
         adjacencyList.add(new ArrayList<>());
@@ -47,6 +48,7 @@ public abstract class Graph
         return vertex;
     }
 
+    // method to add edge from the adjacency list
     abstract public void addEdge(int source, int destination);
 
     // method to be used by controller class to create an edge
@@ -99,6 +101,7 @@ public abstract class Graph
         return edge;
     }
 
+    // method to delete vertex from the adjacency list and update the adjacency list
     private void deleteVertex(int vertex)
     {
         // remove all the edges starting from that vertex
@@ -169,6 +172,7 @@ public abstract class Graph
         return nodesToDelete;
     }
 
+    // method to delete edge from the adjacency list
     abstract void deleteEdge(int source, int destination);
 
     // method to be used by controller class to delete an edge
@@ -276,6 +280,9 @@ public abstract class Graph
         return index;
     }
 
+    /* This method checks if there is any edge present between source and destination
+       It returns true if no edge is present between source and destination or else false.
+    */
     private boolean noEdge(int source, int destination)
     {
         ArrayList<Integer> sourceNeighbours = adjacencyList.get(source);
@@ -285,6 +292,12 @@ public abstract class Graph
         return true;
     }
 
+    /* this method returns an edge if has the same source and destination as provided in the method
+       parameters.
+       it returns null if such edge is found.
+
+       It is advised that noEdge(int, int) is used before calling this method.
+    */
     private Edge getEdge(int source, int destination)
     {
         for (Edge edge: edges)
