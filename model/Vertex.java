@@ -13,7 +13,7 @@ public class Vertex extends StackPane
     // GETTERS
 
     public double[] getCentre() { return centre; }
-    public int getVertexNumber() { return vertexNumberInt; }
+    public int intValue() { return vertexNumberInt; }
 
     // CONSTRUCTOR
 

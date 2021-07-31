@@ -6,8 +6,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import model.DirectedGraph;
 import model.Graph;
-import model.UndirectedGraph;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public class Window
     // CONSTRUCTOR
     public Window()
     {
-        graph = new UndirectedGraph();
+        graph = new DirectedGraph();
         previousClickX = previousClickY = -1;
     }
 
@@ -112,7 +112,7 @@ public class Window
 
     private void addEdge(double x, double y)
     {
-        Node nodeToAdd = graph.addEdge(new double[]{previousClickX, previousClickY}, new double[]{x, y}, false);
+        Node nodeToAdd = graph.addEdge(new double[]{previousClickX, previousClickY}, new double[]{x, y}, true);
 
         if (nodeToAdd != null)
         {
@@ -139,6 +139,6 @@ public class Window
     {
         Node nodeToDelete = graph.deleteEdge(new double[]{x, y});
 
-        if (nodeToDelete != null) workspace.getChildren().remove(nodeToDelete);
+        workspace.getChildren().remove(nodeToDelete);
     }
 }

@@ -9,21 +9,26 @@ import static java.lang.Math.PI;
 public class Edge extends Group
 {
     // edge start and edge end is NOT the centre of startVertex and endVertex of the edge respectively
-    final double[] start, end;
+    private final double[] start, end;
     // the edge angle lies between 0 to PI
-    final double edgeAngle;
-    final Vertex startVertex, endVertex;
-    boolean isDirected;
-    // An edge is bi-directional if its undirected OR (directed AND it connects both the vertices in both directions)
-    boolean isBidirectional;
+    private final double edgeAngle;
+    private final Vertex startVertex, endVertex;
+    private boolean isDirected;
+    // An edge is bi-directional if its undirected OR (directed AND it connects both the start and end vertices in
+    // both directions)
+    private boolean isBidirectional;
 
     // GETTER
 
     public Vertex getStartVertex() { return startVertex; }
     public Vertex getEndVertex() { return endVertex; }
+    public boolean isDirected() { return isDirected; }
+    public boolean isBidirectional() { return isBidirectional; }
 
     // CONSTRUCTOR
 
+    // the constructor is private. In order to get Edge objects, static method getEdge(Vertex, Vertex, double, boolean)
+    // is used
     private Edge(double[] start, double[] end, Vertex startVertex, Vertex endVertex, double edgeAngle, boolean isDirected)
     {
         this.start = start;
@@ -41,7 +46,7 @@ public class Edge extends Group
 
         this.getChildren().add(edge);
 
-        if (isDirected) this.getChildren().add(getEdgeArrow());
+        if (isDirected) this.getChildren().add(getEdgeArrow(this.start, this.end));
     }
 
     // METHODS
@@ -123,9 +128,24 @@ public class Edge extends Group
         return new double[][]{A, B, C, D};
     }
 
-    // the method is used to add an arrow to the given edge which is useful in case of directed graphs
+    public void setBidirectional(boolean set)
+    {
+        if (set)
+        {
+            this.getChildren().add(getEdgeArrow(end, start));
+            this.isBidirectional = true;
+        }
+        else if (this.getChildren().size() == 3)
+        {
+            this.getChildren().remove(2);
+            this.isBidirectional = false;
+        }
+    }
 
-    private Polygon getEdgeArrow()
+    /* the method is used to add an arrow to the given edge which is useful in case of directed graphs.
+       the method takes start and end as inputs to help in the construction of bi-directional edges.
+    */
+    private Polygon getEdgeArrow(double[] start, double[] end)
     {
         // declare the needed variables
         final double arrowLength = 15;

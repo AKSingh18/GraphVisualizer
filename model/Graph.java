@@ -52,23 +52,51 @@ public abstract class Graph
     // method to be used by controller class to create an edge
     public Node addEdge(double[] previousClick, double[] currentClick, boolean isDirected)
     {
+        Edge edge = null;
+
         int startVertexIndex = findVertexIndex(previousClick[0], previousClick[1]);
         int endVertexIndex = findVertexIndex(currentClick[0], currentClick[1]);
 
+        // only try to add the edge if the user has clicked on vertices
         if (startVertexIndex != -1 && endVertexIndex != -1 && startVertexIndex != endVertexIndex)
         {
             Vertex startVertex = vertices.get(startVertexIndex);
             Vertex endVertex = vertices.get(endVertexIndex);
 
-            // add the to the adjacency list
-            addEdge(startVertex.getVertexNumber(), endVertex.getVertexNumber());
+            final int source = startVertex.intValue();
+            final int destination = endVertex.intValue();
 
-            Edge edge = Edge.getEdge(startVertex, endVertex, vertexRadius, isDirected);
-            edges.add(edge);
-            return edge;
+            // check if there already exists an edge from start to end vertex, only add the edge if there does not
+            if (noEdge(source, destination))
+            {
+                /*  new edge will be created only if two cases follow:
+                        1: edge to be added is undirected
+                        2: edge to be added is directed and no edge already exists from destination to source
+                */
+                if (!isDirected || noEdge(destination, source))
+                {
+                    addEdge(source, destination);
+                    edge = Edge.getEdge(startVertex, endVertex, vertexRadius, isDirected);
+                    edges.add(edge);
+                }
+                // if case 2 follows, then an reverse edge already exists. Find that reverse edge and set it as
+                // bi-directional
+                else
+                {
+                    edge = getEdge(destination, source);
+                    if (edge != null)
+                    {
+                        addEdge(source, destination);
+                        edge.setBidirectional(true);
+                    }
+
+                    // reset the edge to avoid duplicate entry
+                    edge = null;
+                }
+            }
         }
 
-        return null;
+        return edge;
     }
 
     private void deleteVertex(int vertex)
@@ -130,7 +158,7 @@ public abstract class Graph
             // decrement the vertex number of all the vertices ahead of found vertex
             for (int i = vertexIndex+1;i < vertices.size();i++) vertices.get(i).decrementVertexNumber();
 
-            deleteVertex(foundVertex.getVertexNumber());
+            deleteVertex(foundVertex.intValue());
 
             // delete the found vertex and update the vertexCount
             nodesToDelete.add(foundVertex);
@@ -160,11 +188,29 @@ public abstract class Graph
 
         if (edgeIndex != -1)
         {
-            deleteEdge(edge.getStartVertex().getVertexNumber(), edge.getEndVertex().getVertexNumber());
-            edges.remove(edge);
+            /* edge will be deleted only if two cases follow:
+               1: edge is undirected
+               2: edge is directed and unidirectional
+            */
+            if (!edge.isDirected() || !edge.isBidirectional())
+            {
+                deleteEdge(edge.getStartVertex().intValue(), edge.getEndVertex().intValue());
+                edges.remove(edge);
+            }
+            // if case 2 follows, then the edge is directed and bi-directional. In that case, make the edge as
+            // unidirectional
+            else
+            {
+                deleteEdge(edge.getEndVertex().intValue(), edge.getStartVertex().intValue());
+                edge.setBidirectional(false);
+                // reset the edge to avoid deletion
+                edge = null;
+            }
+
+            return edge;
         }
 
-        return edge;
+        return null;
     }
 
     // method to be used by controller class to reset the graph
@@ -228,5 +274,24 @@ public abstract class Graph
         }
 
         return index;
+    }
+
+    private boolean noEdge(int source, int destination)
+    {
+        ArrayList<Integer> sourceNeighbours = adjacencyList.get(source);
+
+        for (Integer sourceNeighbour : sourceNeighbours) if (sourceNeighbour == destination) return false;
+
+        return true;
+    }
+
+    private Edge getEdge(int source, int destination)
+    {
+        for (Edge edge: edges)
+        {
+            if (edge.getStartVertex().intValue()==source && edge.getEndVertex().intValue()==destination) return edge;
+        }
+
+        return null;
     }
 }
