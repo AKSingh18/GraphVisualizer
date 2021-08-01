@@ -2,12 +2,14 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.DirectedGraph;
 import model.Graph;
+import model.UndirectedGraph;
 
 import java.util.ArrayList;
 
@@ -19,7 +21,6 @@ public class Window
     @FXML private ToggleGroup tools;
     // graph type consists of directed and undirected ToggleButton
     @FXML private ToggleGroup graphType;
-
     @FXML private ToggleButton undirected;
     @FXML private ToggleButton directed;
 
@@ -32,7 +33,7 @@ public class Window
     // CONSTRUCTOR
     public Window()
     {
-        graph = new DirectedGraph();
+        graph = new UndirectedGraph();
         previousClickX = previousClickY = -1;
     }
 
@@ -46,6 +47,21 @@ public class Window
 
         // select the graph toggle by default
         graphType.selectToggle(undirected);
+
+        // add a change listener to reset the graph and create the correct graph object depending upon option chosen
+        graphType.selectedToggleProperty().addListener((observableValue, oldToggle, newToggle) ->
+        {
+            // reset the workspace and the graph before starting a new one
+            onReset();
+
+            RadioButton selectedGraph = (RadioButton)newToggle;
+
+            switch (selectedGraph.getId())
+            {
+                case "directed" -> graph = new DirectedGraph();
+                case "undirected" -> graph = new UndirectedGraph();
+            }
+        });
     }
 
     // GETTERS
@@ -98,7 +114,7 @@ public class Window
 
     private void addEdge(double x, double y)
     {
-        Node nodeToAdd = graph.addEdge(new double[]{previousClickX, previousClickY}, new double[]{x, y}, true);
+        Node nodeToAdd = graph.addEdge(new double[]{previousClickX, previousClickY}, new double[]{x, y}, graph.isGraphDirected());
 
         if (nodeToAdd != null)
         {
@@ -127,6 +143,4 @@ public class Window
 
         workspace.getChildren().remove(nodeToDelete);
     }
-
-
 }

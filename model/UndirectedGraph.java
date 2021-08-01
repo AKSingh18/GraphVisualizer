@@ -12,6 +12,11 @@ public class UndirectedGraph extends Graph
     }
 
     @Override
+    public boolean isGraphDirected() {
+        return false;
+    }
+
+    @Override
     void deleteEdge(int source, int destination)
     {
         // delete the edge from source to destination

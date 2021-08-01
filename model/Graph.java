@@ -31,6 +31,8 @@ public abstract class Graph
 
     // METHODS
 
+    public abstract boolean isGraphDirected();
+
     // method to add vertex from the adjacency list
     void addVertex()
     {
