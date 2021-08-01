@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -10,10 +11,10 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="5.0" minWidth="70.0" prefWidth="70.0" text="Draw" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="-6.0" AnchorPane.topAnchor="-5.0" />
       <Separator orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="63.4" AnchorPane.topAnchor="-5.0" />
 
-      <ToggleButton fx:id="addVertex" minWidth="70.0" mnemonicParsing="false" onAction="#onToolsSelect" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefWidth="70.0" styleClass="toggle-button" stylesheets="@../style/window.css" text="Vertex" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="64.4" AnchorPane.topAnchor="-5.0">
+      <ToggleButton fx:id="addVertex" minWidth="70.0" mnemonicParsing="false" prefWidth="70.0" styleClass="toggle-button" stylesheets="@../style/window.css" text="Vertex" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="64.4" AnchorPane.topAnchor="-5.0">
          <toggleGroup> <ToggleGroup fx:id="tools" /> </toggleGroup>
       </ToggleButton>
-      <ToggleButton fx:id="addEdge" maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" onAction="#onToolsSelect" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" styleClass="toggle-button" stylesheets="@../style/window.css" text="Edge" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="134.4" AnchorPane.topAnchor="-5.0">
+      <ToggleButton fx:id="addEdge" maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" styleClass="toggle-button" stylesheets="@../style/window.css" text="Edge" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="134.4" AnchorPane.topAnchor="-5.0">
          <toggleGroup> <fx:reference source="tools" /> </toggleGroup>
       </ToggleButton>
 
@@ -21,25 +22,31 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" minWidth="70.0" prefWidth="70.0" text="Delete" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="205.4" AnchorPane.topAnchor="-5.0" />
       <Separator layoutX="220.0" layoutY="10.0" orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="274.4" AnchorPane.topAnchor="-5.0" />
 
-      <ToggleButton fx:id="deleteVertex" minWidth="70.0" mnemonicParsing="false" onAction="#onToolsSelect" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" styleClass="toggle-button" stylesheets="@../style/window.css" text="Vertex" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="275.4" AnchorPane.topAnchor="-5.0">
+      <ToggleButton fx:id="deleteVertex" minWidth="70.0" mnemonicParsing="false" styleClass="toggle-button" stylesheets="@../style/window.css" text="Vertex" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="275.4" AnchorPane.topAnchor="-5.0">
          <toggleGroup> <fx:reference source="tools" /> </toggleGroup>
       </ToggleButton>
-      <ToggleButton fx:id="deleteEdge" layoutX="150.0" layoutY="10.0" minWidth="70.0" mnemonicParsing="false" onAction="#onToolsSelect" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" styleClass="toggle-button" stylesheets="@../style/window.css" text="Edge" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="344.4" AnchorPane.topAnchor="-5.0">
+      <ToggleButton fx:id="deleteEdge" layoutX="150.0" layoutY="10.0" minWidth="70.0" mnemonicParsing="false" styleClass="toggle-button" stylesheets="@../style/window.css" text="Edge" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="344.4" AnchorPane.topAnchor="-5.0">
          <toggleGroup> <fx:reference source="tools" /> </toggleGroup>
       </ToggleButton>
 
       <Separator layoutX="417.0" layoutY="21.0" orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="414.0" AnchorPane.topAnchor="-5.0" />
-      <Button layoutX="426.0" layoutY="10.0" minWidth="70.0" mnemonicParsing="false" onAction="#onReset" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefWidth="70.0" styleClass="toggle-button" stylesheets="@../style/window.css" text="Reset" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="415.4" AnchorPane.topAnchor="-5.0" />
+      <Button layoutX="426.0" layoutY="10.0" minWidth="70.0" mnemonicParsing="false" onAction="#onReset" prefWidth="70.0" styleClass="toggle-button" stylesheets="@../style/window.css" text="Reset" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="415.4" AnchorPane.topAnchor="-5.0" />
       <Separator layoutX="488.0" layoutY="21.0" orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="484.4" AnchorPane.topAnchor="-5.0" />
-      <ToggleButton fx:id="undirected" contentDisplay="CENTER" layoutX="80.0" layoutY="10.0" minWidth="90.0" mnemonicParsing="false" onAction="#onGraphSelect" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefWidth="70.0" styleClass="toggle-button" stylesheets="@../style/window.css" text="Directed" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="-5.0">
+      <RadioButton fx:id="directed" contentDisplay="CENTER" layoutX="80.0" layoutY="10.0" minWidth="90.0" mnemonicParsing="false" prefWidth="70.0" stylesheets="@../style/window.css" text="Directed" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="-5.0">
          <toggleGroup>
             <ToggleGroup fx:id="graphType" />
          </toggleGroup>
-      </ToggleButton>
+         <styleClass>
+            <String fx:value="radio-button-custom" />
+            <String fx:value="toggle-button" />
+         </styleClass>
+      </RadioButton>
       <Separator layoutX="430.0" layoutY="10.0" orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="-5.0" />
-      <ToggleButton fx:id="directed" contentDisplay="CENTER" layoutX="1160.0" layoutY="10.0" minWidth="90.0" mnemonicParsing="false" onAction="#onGraphSelect" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefWidth="70.0" styleClass="toggle-button" stylesheets="@../style/window.css" text="Undirected" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="-5.0">
-         <toggleGroup> <fx:reference source="graphType"/> </toggleGroup>
-      </ToggleButton>
+      <RadioButton fx:id="undirected" contentDisplay="CENTER" layoutX="1160.0" layoutY="10.0" minWidth="90.0" mnemonicParsing="false" prefWidth="70.0" stylesheets="@../style/window.css" text="Undirected" toggleGroup="$graphType" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="-5.0">
+         <styleClass>
+            <String fx:value="toggle-button" />
+            <String fx:value="radio-button-custom" />
+         </styleClass></RadioButton>
       <Separator layoutX="1158.0" layoutY="10.0" orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="-5.0" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="221.0" layoutY="10.0" minWidth="70.0" prefWidth="70.0" text="Graph" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="-5.0" />
       <Separator layoutX="1068.0" layoutY="10.0" orientation="VERTICAL" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="-5.0" />

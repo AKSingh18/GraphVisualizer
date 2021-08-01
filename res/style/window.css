@@ -22,6 +22,19 @@
     -fx-pref-height: 40px;
 }
 
+.toggle-button:hover {
+    -fx-background-color: #DCDCDC;
+}
+
+.toggle-button:selected {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(183, 222, 235, 0.50) 0%, rgba(147, 112, 219, 0.40) 100%);
+}
+
+
+.radio-button-custom:selected{
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(255, 165, 0, 0.40) 0%, rgba(0, 255, 127, .20) 100%);
+}
+
 .label {
     -fx-font-family: "Open Sans";
     -fx-font-weight: bold;
