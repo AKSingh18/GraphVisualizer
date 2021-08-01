@@ -13,7 +13,7 @@ public class Edge extends Group
     // the edge angle lies between 0 to PI
     private final double edgeAngle;
     private final Vertex startVertex, endVertex;
-    private boolean isDirected;
+    private final boolean isDirected;
     // An edge is bi-directional if its undirected OR (directed AND it connects both the start and end vertices in
     // both directions)
     private boolean isBidirectional;
