@@ -1,11 +1,11 @@
-#Graph Visualizer
+# Graph Visualizer
 
-##Synopsis
+## Synopsis
 
 Graph Visualizer application provides the tools to _create an undirected and directed graph_. Tools to add and delete a
 vertex and edge are available. Option to switch between directed and undirected graph is also available.
 
-##Table of Contents
+## Table of Contents
 
 > * [Title](#steganography)
 >   * [Synopsis](#synopsis)
@@ -14,11 +14,11 @@ vertex and edge are available. Option to switch between directed and undirected 
 >   * [Installation Guide](#installation-guide)
 >   * [Usage](#usage)
 
-##Dependencies
+## Dependencies
 
 - JavaFX SDK 11.0.2+
 
-##Installation Guide
+## Installation Guide
 
 This project is built using *IntelliJ IDEA 2020.2.3* and *java version 16.0.1*. Hence, the following steps are according
 to it. If the reader is using any other IDE, an updated version of IntelliJ IDEA or has java version less than 11, then
@@ -45,18 +45,18 @@ he/she has to do the required configuration listed below by themselves.
 
    * Apply the change and close the dialog.
 
-##Usage
+## Usage
 
 A [demo video](Demo.mp4) is uploaded along with the source code to make the working of the project clear. Here are the
 steps:   
 
-######Running the application
+###### Running the application
 
 [Main.java](Main.java) contains the `main` method of the project. Run the project.
 
    ![Main Window](Files/main-window.jpg) 
 
-######Creating a graph
+###### Creating a graph
 
 The left side of the toolbar contains the tools to create and modify the graph. 
 
@@ -80,7 +80,7 @@ The left side of the toolbar contains the tools to create and modify the graph.
 
    To delete an edge, simply select on `Edge` in the `Delete` section. *Click* on an existing edge to delete it.
 
-######Switching graph
+###### Switching graph
 
 The right side of the toolbar contains the current type of graph. The default option is Undirected.
    
