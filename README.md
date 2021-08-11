@@ -69,7 +69,7 @@ The left side of the toolbar contains the tools to create and modify the graph.
    
 2. Adding an edge
 
-   To add an edge, simply select on `EDge` in the `Draw` section. *Click* on the starting vertex and ending vertex 
+   To add an edge, simply select on `Edge` in the `Draw` section. *Click* on the starting vertex and ending vertex 
    of the edge to create one.
    
 3. Deleting a vertex 
