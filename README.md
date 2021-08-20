@@ -7,7 +7,7 @@ vertex and edge are available. Option to switch between directed and undirected 
 
 ## Table of Contents
 
-> * [Title](#steganography)
+> * [Title](#graph-visualizer)
 >   * [Synopsis](#synopsis)
 >   * [Table of Contents](#table-of-contents)
 >   * [Dependencies](#dependencies)
