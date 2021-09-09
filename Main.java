@@ -17,6 +17,8 @@ public class Main extends Application
         scene.getStylesheets().add("res/style/elements.css");
 
         stage.setTitle("Graph Visualizer");
+        stage.setMinWidth(757);
+        stage.setMinHeight(600);
 
         stage.setScene(scene);
         stage.show();
